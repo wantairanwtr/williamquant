@@ -1,6 +1,11 @@
 import tushare as ts
 import pickle
 import os
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+style.use("ggplot")
 ts.set_token("4255f4cccadbf2360a413469a8301012e3a46208571ffef488db2d4c")
 pro=ts.pro_api()
 # df=pro.daily(ts_code="000001.SZ",start_date="20180101",end_date="20181118")
@@ -47,4 +52,19 @@ def get_data_from_tushare(reload_CSI_300=False):
             df.to_csv("stock_dfs/{}.csv".format(ticker_mod))
         else:
             print("We already have{}".format(ticker_mod))
-get_data_from_tushare()
+# get_data_from_tushare()
+
+#Put all stock close price into one dataframe
+
+def put_all_stock_price_into_one_df():
+    with open("CSI_tickers.pickle") as f:
+        tickers=pickle.load("CSI_tickers.pickle")
+    all_stock_price=pd.DataFrame()
+    for count,ticker in enumerate(tickers):
+        df=pd.read_csv("stock_dfs/{}.csv".format(ticker))
+        df.set_index("trade_date",inplace=True)
+        df.rename(columns={"close":ticker},inplace=True)
+        df.drop(["index","ts_code","open","high","low","pre_close","change","pct_chg","vol","amount"],axis=1,inplace=True)
+        
+    print(all_stock_price)
+put_all_stock_price_into_one_df()
