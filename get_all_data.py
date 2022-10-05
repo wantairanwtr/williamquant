@@ -10,8 +10,11 @@ ts.set_token("4255f4cccadbf2360a413469a8301012e3a46208571ffef488db2d4c")
 pro=ts.pro_api()
 # df=pro.daily(ts_code="000001.SZ",start_date="20180101",end_date="20181118")
 # print(df)
+
 #Lastest CSI 300
+
 #find and save Lastest CSI 300 and make it compatible with tushare pro API
+
 def find_and_save_CSI_300():
     CSI_300_df_SH=pro.hs_const(hs_type='SH')
     CSI_300_df_SZ = pro.hs_const(hs_type='SZ')
@@ -71,4 +74,15 @@ def put_all_stock_price_into_one_df():
             all_stock_price=all_stock_price.join(df,how="outer")
         print(count)
     all_stock_price.to_csv("CSI_300_Joined_Closes.csv")
-put_all_stock_price_into_one_df()
+# put_all_stock_price_into_one_df()
+
+#calculate,save and plot pearson correlation heatmap
+
+def calculate_save_and_plot_pearson_correlation_heatmap():
+    df=pd.read_csv("CSI_300_Joined_Closes.csv")
+    # df["000831.SZ"].plot()
+    # plt.show()
+    df_corr=df.pct_change().corr()
+    # print(df_corr.head())
+    df_corr.to_csv("CSI_300_pct_change_corr.csv")
+calculate_save_and_plot_pearson_correlation_heatmap()
