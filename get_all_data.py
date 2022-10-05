@@ -57,14 +57,18 @@ def get_data_from_tushare(reload_CSI_300=False):
 #Put all stock close price into one dataframe
 
 def put_all_stock_price_into_one_df():
-    with open("CSI_tickers.pickle") as f:
-        tickers=pickle.load("CSI_tickers.pickle")
+    with open("CSI_tickers.pickle","rb") as f:
+        tickers=pickle.load(f)
     all_stock_price=pd.DataFrame()
     for count,ticker in enumerate(tickers):
         df=pd.read_csv("stock_dfs/{}.csv".format(ticker))
         df.set_index("trade_date",inplace=True)
         df.rename(columns={"close":ticker},inplace=True)
         df.drop(["index","ts_code","open","high","low","pre_close","change","pct_chg","vol","amount"],axis=1,inplace=True)
-        
-    print(all_stock_price)
+        if all_stock_price.empty:
+            all_stock_price=df
+        else:
+            all_stock_price=all_stock_price.join(df,how="outer")
+        print(count)
+    all_stock_price.to_csv("CSI_300_Joined_Closes.csv")
 put_all_stock_price_into_one_df()
