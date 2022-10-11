@@ -102,4 +102,4 @@ def calculate_save_and_plot_pearson_correlation_heatmap():
     heatmap.set_clim(-1,1)
     plt.tight_layout()
     plt.show()
-# calculate_save_and_plot_pearson_correlation_heatmap()
+calculate_save_and_plot_pearson_correlation_heatmap()
