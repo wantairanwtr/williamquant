@@ -43,4 +43,16 @@ returns_daily=df.pct_change()
 returns_annual=returns_daily.mean()*250
 # print(returns_annual)
 cov_daily=returns_daily.cov()
-print(cov_daily)
+# print(cov_daily)
+# a=returns_daily-returns_daily.mean()
+# a1=a["000001.SZ"]
+# a2=a["000002.SZ"]
+# print(a1.mul(a1).sum()/574)
+# print(a1.mul(a2).sum()/574)
+# print(a2.mul(a1).sum()/574)
+# print(a2.mul(a2).sum()/574)
+cov_annual=cov_daily*250
+
+portfolio_return=[]
+portfolio_volatility=[]
+stock_weights=[]
