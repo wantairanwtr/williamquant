@@ -14,9 +14,11 @@ def data_now(now_tickers):
             df.reset_index(inplace=True)
             df.set_index("trade_date",inplace=True)
             df.to_csv("stock_dfs/{}.csv".format(ticker_mod))
+#choose the stock you like
 tickers=["000001.SZ","000002.SZ"]
 # data_now(tickers)
 
+#put all selected stock into one DataFrame
 def put_some_stock_price_into_one_df(df_tickers):
     some_stock_price=pd.DataFrame()
     print(some_stock_price)
@@ -34,14 +36,17 @@ def put_some_stock_price_into_one_df(df_tickers):
     some_stock_price.to_csv("CSI_selected_Closes.csv")
 # put_some_stock_price_into_one_df(tickers)
 
+#make data clean
 df=pd.read_csv("CSI_selected_Closes.csv")
 df.set_index("trade_date",inplace=True)
 # # print(df.loc[np.int64("20160316"):np.int64("20160413")])
 df.dropna(inplace=True)
+
+#The basic financal calculation
 returns_daily=df.pct_change()
 # print(returns_daily.head())
 returns_annual=returns_daily.mean()*250
-# print(returns_annual)
+print(returns_annual)
 cov_daily=returns_daily.cov()
 # print(cov_daily)
 # a=returns_daily-returns_daily.mean()
@@ -56,3 +61,16 @@ cov_annual=cov_daily*250
 portfolio_return=[]
 portfolio_volatility=[]
 stock_weights=[]
+
+#Make Portfolio
+num_assets=len(tickers)
+num_portfolio=1
+
+for single_portfolio in range(num_portfolio):
+    weights=np.random.random(num_assets)
+    weights=weights/weights.sum()
+    print(weights)
+print("--------------------")
+print(np.dot(weights,returns_annual))
+print("--------------------")
+print((returns_annual*weights).sum())
