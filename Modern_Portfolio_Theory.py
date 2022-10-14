@@ -46,7 +46,7 @@ df.dropna(inplace=True)
 returns_daily=df.pct_change()
 # print(returns_daily.head())
 returns_annual=returns_daily.mean()*250
-print(returns_annual)
+# print(returns_annual)
 cov_daily=returns_daily.cov()
 # print(cov_daily)
 # a=returns_daily-returns_daily.mean()
@@ -64,13 +64,23 @@ stock_weights=[]
 
 #Make Portfolio
 num_assets=len(tickers)
-num_portfolio=1
+num_portfolio=10
 
 for single_portfolio in range(num_portfolio):
     weights=np.random.random(num_assets)
     weights=weights/weights.sum()
-    print(weights)
-print("--------------------")
-print(np.dot(weights,returns_annual))
-print("--------------------")
-print((returns_annual*weights).sum())
+    # print(weights)
+    # print("--------------------")
+    # print(np.dot(weights,returns_annual))
+    # print("--------------------")
+    # print((returns_annual*weights).sum())
+    returns=np.dot(weights,returns_annual)
+    # print(returns)
+    volatility=np.sqrt(np.dot(weights.T,np.dot(weights,cov_annual)))
+    # print(volatility)
+    portfolio_return.append(returns)
+    portfolio_volatility.append(volatility)
+    stock_weights.append(weights)
+print(portfolio_return)
+print(portfolio_volatility)
+print(stock_weights)
