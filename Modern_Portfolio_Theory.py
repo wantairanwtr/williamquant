@@ -42,7 +42,7 @@ df.set_index("trade_date",inplace=True)
 # # print(df.loc[np.int64("20160316"):np.int64("20160413")])
 df.dropna(inplace=True)
 
-#The basic financal calculation
+#The basic financial calculation
 returns_daily=df.pct_change()
 # print(returns_daily.head())
 returns_annual=returns_daily.mean()*250
@@ -64,7 +64,7 @@ stock_weights=[]
 
 #Make Portfolio
 num_assets=len(tickers)
-num_portfolio=10
+num_portfolio=100000
 
 for single_portfolio in range(num_portfolio):
     weights=np.random.random(num_assets)
@@ -81,6 +81,15 @@ for single_portfolio in range(num_portfolio):
     portfolio_return.append(returns)
     portfolio_volatility.append(volatility)
     stock_weights.append(weights)
-print(portfolio_return)
-print(portfolio_volatility)
-print(stock_weights)
+# print(portfolio_return)
+# print(portfolio_volatility)
+# print(stock_weights)
+
+#Make the selected Super Portfolio into one dataframe
+portfolio={"Return":portfolio_return,
+           "Volatility":portfolio_volatility}
+for counter,ticker in enumerate(tickers):
+    portfolio[ticker+" weight"]=[Weight[counter] for Weight in stock_weights]
+df_portfolio=pd.DataFrame(portfolio)
+# print(df_portfolio.head())
+df_portfolio.to_csv("big_big_data.csv")
