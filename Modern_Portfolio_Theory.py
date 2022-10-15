@@ -93,3 +93,10 @@ for counter,ticker in enumerate(tickers):
 df_portfolio=pd.DataFrame(portfolio)
 # print(df_portfolio.head())
 df_portfolio.to_csv("big_big_data.csv")
+
+plt.style.use("seaborn")
+df_portfolio.plot.scatter(x="Volatility",y="Return",figsize=(10,8),grid=True)
+plt.xlabel("Volatility / Std Deviation")
+plt.ylabel("Expected Returns")
+plt.title("Efficient Frontier")
+plt.show()
