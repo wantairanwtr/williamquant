@@ -64,7 +64,7 @@ stock_weights=[]
 
 #Make Portfolio
 num_assets=len(tickers)
-num_portfolio=100000
+num_portfolio=1000
 
 for single_portfolio in range(num_portfolio):
     weights=np.random.random(num_assets)
